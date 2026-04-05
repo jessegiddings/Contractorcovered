@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-black: #0a0a0a;
+  --color-charcoal: #141414;
+  --color-steel: #1e2227;
+  --color-iron: #2c3039;
+  --color-smoke: #3d4148;
+  --color-ash: #6b7280;
+  --color-fog: #9ca3af;
+  --color-light: #e8eaed;
+  --color-white: #f5f6f7;
+  --color-orange: #f97316;
+  --color-orange-hot: #fb923c;
+  --color-orange-dim: #431407;
+  --color-yellow: #fbbf24;
+  --color-green: #22c55e;
+  --color-green-dim: #14532d;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* Animations */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Toggle switch */
+.toggle {
+  width: 36px;
+  height: 20px;
+  background: var(--color-smoke);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  border: none;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 14px; height: 14px;
+  background: var(--color-ash);
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.toggle.on {
+  background: rgba(249,115,22,0.3);
+}
+
+.toggle.on::after {
+  left: 19px;
+  background: var(--color-orange);
+}
+
+/* Custom scrollbar for chat */
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--color-smoke); border-radius: 2px; }
+
+/* Select arrow */
+select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select.form-input option { background: var(--color-steel); }
